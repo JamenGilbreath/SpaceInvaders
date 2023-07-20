@@ -25,7 +25,7 @@ export default class EnemyController {
     constructor(canvas) {
         this.canvas = canvas;
         this.enemyBulletController = enemyBulletController;
-        this.playerBulletController = this.playerBulletController;
+        this.playerBulletController = playerBulletController;
         this.createEnemies();
     }
 
@@ -35,7 +35,7 @@ export default class EnemyController {
         this.collisionDetection();
         this.drawEnemies(ctx);
         this.resetMoveDownTimer();
-        this.fireBulletTimer();
+        this.fireBullet();
     }
 
     collisionDetection() {
@@ -48,7 +48,7 @@ export default class EnemyController {
                 }
             });
         });
-        thius.enemyRows = this.enemyRows.filter(enemyRow=> enemyRow.length > 0);
+        this.enemyRows = this.enemyRows.filter(enemyRow=> enemyRow.length > 0);
     }
 
     fireBullet() {
@@ -84,7 +84,7 @@ export default class EnemyController {
             this.xVelocity = this.defaultXVelocity;
             this.yVelocity = 0;
             const rightMostEnemy = enemyRow[enemyRow.length - 1];
-            if (rightMostEnemy = rightMostEnemy.width >= this.canvas.width){
+            if (rightMostEnemy.width >= this.canvas.width){
                 this.currentDirection = MovingDirection.downLeft;
                 break;
             }
@@ -92,7 +92,7 @@ export default class EnemyController {
         else if(this.currentDirection === MovingDirection.downLeft) {
             this.xVelocity = 0;
             this.yVelocity = this.defaultYVelocity;
-            if(this.moveDownTimer(MovingDirection.left)){
+            if(this.moveDownTimer <=0){
                 break;
             }
         } else if(this.currentDirection == MovingDirection.left) {
@@ -122,7 +122,7 @@ export default class EnemyController {
     }
 
  drawEnemies(ctx){
-    this.enemyRows.play().forEach((enemy)=> {
+    this.enemyRows.forEach((enemy)=> {
         enemy.move(thix.xVelocity, this.yVelocity)
         enemy.draw(ctx);
     });
@@ -143,4 +143,4 @@ export default class EnemyController {
         return this.enemyRows.flat().some(enemy=> enemy.collideWith(sprite));
 
     }
-}
+};
