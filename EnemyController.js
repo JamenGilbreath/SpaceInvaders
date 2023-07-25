@@ -1,5 +1,7 @@
 import Enemy from "./enemy.js";
 import MovingDirection from "./movingDirection.js";
+import BulletController from "./BulletController.js";
+
 export default class EnemyController {
 
 
@@ -40,8 +42,8 @@ export default class EnemyController {
 
     constructor(canvas) {
         this.canvas = canvas;
-        this.enemyBulletController = new Enemy;
-        this.playerBulletController;
+        this.enemyBulletController = new BulletController(canvas);
+        this.playerBulletController = new BulletController(canvas, 5, "red", true);
         this.createEnemies();
     }
 
@@ -69,7 +71,7 @@ export default class EnemyController {
 
     fireBullet() {
         this.fireBulletTimer--;
-        if(this.fireBulletTimer <=0 ) {
+        if (this.fireBulletTimer <= 0) {
             this.fireBulletTimer = this.fireBulletTimerDefault;
             const allEnemies = this.enemyRows.flat();
             const enemyIndex = Math.floor(Math.random() * allEnemies.length);
@@ -133,9 +135,7 @@ export default class EnemyController {
             }
         }
       }  
-      if (!shouldBreak) {
-        this.updateVelocityAndDirection();
-      }
+     
     }
 
     moveDown(newDirection) {
@@ -158,12 +158,12 @@ export default class EnemyController {
     }
 
     createEnemies () {
-        this.enemyMap.forEach((row,rowIndex) => {
+        this.enemyMap.forEach((row, rowIndex) => {
             this.enemyRows[rowIndex] = [];
             row.forEach((enemyNumber, enemyIndex) => {
                 if(enemyNumber > 0){
                     this.enemyRows[rowIndex].push(
-                        new EnemyController(enemyIndex* 50, rowIndex* 35, enemyNumber))
+                        new Enemy(enemyIndex* 50, rowIndex* 35, enemyNumber))
                 }
             });
         })
