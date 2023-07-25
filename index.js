@@ -1,4 +1,4 @@
-import enemyController from "./EnemyController.js";
+import EnemyController from "./EnemyController.js";
 import Player from "./player.js";
 import BulletController from "./BulletController.js";
 
@@ -9,11 +9,11 @@ canvas.width= 600;
 canvas.width = 600;
 
 const background = new Image();
-background.src = "images/space.png";
+background.src = `images/space.png`;
 
 const playerBulletController = new BulletController(canvas,10,"red",true)
-const enemyBulletContoller = new BulletController(canvas, 4, 'white', false)
-const enemyController = new enemyController(canvas, enemyBulletContoller); 
+const enemyBulletController = new BulletController(canvas, 4, 'white', false)
+const enemy = new EnemyController(canvas, enemyBulletController); 
 const player = new Player(canvas, 3, playerBulletController);
  
 let isGameOver = false;
@@ -23,15 +23,15 @@ function game(){
     checkGameOver();
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
     if (!isGameOver) {
-    enemyController.draw(ctx);
+    enemy.draw(ctx);
     player.draw(ctx);
     playerBulletController.draw(ctx);
-    enemyBulletContoller.draw(ctx);
+    enemyBulletController.draw(ctx);
 }
 }
 
 function displayGameOver() {
-    let text = didwin ? "You Win" : "Game Over";
+    let text = didWin ? "You Win" : "Game Over";
     let textOffset = didWin ? 3.5 : 5;
 
     ctx.fillStyle = "white";
@@ -43,15 +43,15 @@ function checkGameOver() {
     if(isGameOver){
         return;
     }
-    if(enemyBulletContoller.collideWith(player)){
+    if(enemyBulletController.collideWith(player)){
         isGameOver = true;
     }
 
-    if(enemyController.collideWith(player)) {
+    if(enemy.collideWith(player)) {
         isGameOver = true;
     }
 
-    if (enemyController.enemyRows.length === 0) {
+    if (enemy.enemyRows.length === 0) {
         didWin = true;
         isGameOver = true;
     }
