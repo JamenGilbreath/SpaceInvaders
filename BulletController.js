@@ -9,9 +9,9 @@ export default class BulletController {
         this.maxBulletsAtATime = maxBulletsAtATime;
         this.BulletColor = BulletColor;
         this.soundEnabled = soundEnabled
-        this.enemyDeathSounds = new Audio('sounds/enemy-death.wav');
+        this.enemyDeathSounds = new Audio('enemy-death.wav');
         this.enemyDeathSounds.volume = 0.5;
-        this.shootSound = new Audio("sound/shoot.wav");
+        this.shootSound = new Audio('shoot.wav');
         this.shootSound.volume = 0.5;
     }
 
@@ -37,10 +37,10 @@ export default class BulletController {
     shoot(x, y, velocity, timeTillNextBulletAllowed = 0) {
         if (
             this.timeTillNextBulletAllowed <= 0 && 
-            this.bullets.length < this.maxBulletsAtATime
+            this.Bullet.length < this.maxBulletsAtATime
         ) {
-            const bullet = new Bullet(this.canvas, x, y, velocity, this.BulletColor);
-            this.bullets.push(bullet);
+            const Bullet = new Bullet(this.canvas, x, y, velocity, this.BulletColor);
+            this.bullets.push(Bullet);
             if (this.soundEnabled) {
                 this.shootSound.currentTime = 0;
                 this.shootSound.play();

@@ -3,13 +3,13 @@ import Player from "./player.js";
 import BulletController from "./BulletController.js";
 
 const canvas = document.getElementById("Game");
-const ctx = canvas.getContext("2d");
+const ctx1 = canvas.getContext("2d");
 
 canvas.width= 600;
 canvas.width = 600;
 
 const background = new Image();
-background.src = `images/space.png`;
+background.src = 'space.png';
 
 const playerBulletController = new BulletController(canvas,10,"red",true)
 const enemyBulletController = new BulletController(canvas, 4, 'white', false)
@@ -21,12 +21,12 @@ let didWin = false;
 
 function game(){
     checkGameOver();
-    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    ctx1.drawImage(background, 0, 0, canvas.width, canvas.height);
     if (!isGameOver) {
-    enemy.draw(ctx);
-    player.draw(ctx);
-    playerBulletController.draw(ctx);
-    enemyBulletController.draw(ctx);
+    enemy.draw(ctx1);
+    player.draw(ctx1);
+    playerBulletController.draw(ctx1);
+    enemyBulletController.draw(ctx1);
 }
 }
 
@@ -34,9 +34,9 @@ function displayGameOver() {
     let text = didWin ? "You Win" : "Game Over";
     let textOffset = didWin ? 3.5 : 5;
 
-    ctx.fillStyle = "white";
-    ctx.font = "70px Arial";
-    ctx.fillText(text, canvas.width / textOffset, canvas.height / 2);
+    ctx1.fillStyle = "white";
+    ctx1.font = "70px Arial";
+    ctx1.fillText(text, canvas.width / textOffset, canvas.height / 2);
 }
 
 function checkGameOver() {

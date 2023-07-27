@@ -76,7 +76,7 @@ export default class EnemyController {
             const allEnemies = this.enemyRows.flat();
             const enemyIndex = Math.floor(Math.random() * allEnemies.length);
             const enemy = allEnemies[enemyIndex];
-            enemy.shoot(enemy.x, enemy.y, -3);
+            this.enemyBulletController.shoot(enemy.x, enemy.y, -3);
         }
     }
 

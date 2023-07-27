@@ -13,7 +13,13 @@ export default class Player {
         this.width = 50;
         this.height = 48;
         this.image = new Image();
-        this.image.src = 'image/player.png';
+        
+
+        this.image.onload = () => {
+            this.draw(ctx);
+        };
+
+        this.image.src = 'player.png';
 
         document.addEventListener("keydown", this.keydown.bind(this));
         document.addEventListener("keyup", this.keyup.bind(this));
@@ -26,8 +32,11 @@ export default class Player {
         
         this.move();
         this.collideWithWalls();
+
+        if (this.image.complete) {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
+}
 
     collideWithWalls() {
         // Left
