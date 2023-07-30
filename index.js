@@ -6,7 +6,7 @@ const canvas = document.getElementById("Game");
 const ctx1 = canvas.getContext("2d");
 
 canvas.width= 600;
-canvas.width = 600;
+canvas.height = 600;
 
 const background = new Image();
 background.src = 'space.png';
@@ -43,11 +43,11 @@ function checkGameOver() {
     if(isGameOver){
         return;
     }
-    if(enemyBulletController.collideWith(Player)){
+    if(enemyBulletController.collideWith(player)){
         isGameOver = true;
     }
 
-    if(enemy.collideWith(Player)) {
+    if(enemy.collideWith(player)) {
         isGameOver = true;
     }
 

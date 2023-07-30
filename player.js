@@ -16,7 +16,7 @@ export default class Player {
         
 
         this.image.onload = () => {
-            this.draw(ctx);
+            this.draw(this.canvas.getContext("2d"));
         };
 
         this.image.src = 'player.png';
@@ -27,7 +27,7 @@ export default class Player {
 
     draw(ctx) {
         if (this.shootPressed) {
-            this.bulletController.shoot(this.x + this.width / 2, this.y, 4, 10);
+            this.bulletController.shoot(this.x + this.width / 2, this.y, 4, 25);
         }
         
         this.move();

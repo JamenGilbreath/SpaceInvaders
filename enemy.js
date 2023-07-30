@@ -9,18 +9,18 @@ export default class enemy {
         this.height = 32;
 
         this.image = new Image();
+        
         this.image.src = `enemy${imageNumber}.png`;
 
-        
     }
 
     draw(ctx) {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
     }
 
-    move(xVelocity, yVelocity) {
-        this.x += xVelocity;
-        this.y += this.yVelocity;
+    move(xVelocity, y_Velocity) {
+        this.x += xVelocity; 
+        this.y +=  y_Velocity;
     }
 
     collideWith(sprite) {
