@@ -14,7 +14,22 @@ export default class BulletController {
         this.shootSound = new Audio('shoot.wav');
         this.shootSound.volume = 0.5;
     }
-
+   collideWith(sprite) {
+        const bulletThatHitSpriteIndex = this.Bullets.findIndex(bullet => {
+            return (
+                bullet.x + bullet.width > sprite.x &&
+                bullet.x < sprite.x + sprite.width &&
+                bullet.y + bullet.height > sprite.y &&
+                bullet.y < sprite.y + sprite.height
+            );
+        });
+    
+        if (bulletThatHitSpriteIndex >= 0) {
+            this.Bullets.splice(bulletThatHitSpriteIndex, 1);
+            return true;
+        }
+        return false;
+    }
     draw(ctx) {
         this.Bullets.forEach((bullet) => {
             bullet.draw(ctx);
@@ -30,15 +45,7 @@ export default class BulletController {
         }
     } 
 
-    collideWith(sprite) {
-        const bulletThatHitSpriteIndex = this.Bullets.findIndex((Bullet) => Bullet.collideWith(sprite));
-
-        if (bulletThatHitSpriteIndex >= 0) {
-            this.Bullets.splice(bulletThatHitSpriteIndex, 1);
-            return true;
-        }
-        return false;
-    }
+ 
 
     shoot(x, y, velocity, timeTillNextBulletAllowed = 0) {
         if (

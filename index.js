@@ -20,13 +20,15 @@ let isGameOver = false;
 let didWin = false;
 
 function game(){
+    ctx1.clearRect(0, 0, canvas.width, canvas.height);
     checkGameOver();
     ctx1.drawImage(background, 0, 0, canvas.width, canvas.height);
     if (!isGameOver) {
-    enemy.draw(ctx1);
+    enemy.draw(ctx1); // enemies are being drawn first
+    enemyBulletController.draw(ctx1);
+    
     player.draw(ctx1);
     playerBulletController.draw(ctx1);
-    enemyBulletController.draw(ctx1);
 }
 }
 

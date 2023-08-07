@@ -40,36 +40,51 @@ export default class EnemyController {
     fireBulletTimer = this.fireBulletTimerDefault;
 
     constructor(canvas) {
-        this.canvas = canvas;
+        this.canvas = canvas;this.createEnemies();
         this.enemyBulletController = new BulletController(canvas);
         this.playerBulletController = new BulletController(canvas, 5, "red", true);
-        this.createEnemies();
+        
         this.enemyDeathSounds = new Audio('enemy-death.wav');
     this.enemyDeathSounds.volume = 0.5;
     }
 
     draw(ctx) {
+        this.drawEnemies(ctx); 
         this.decrementMoveDownTimer();
         this.updateVelocityAndDirection();
-        this.collisionDetection();
-        this.drawEnemies(ctx);
+        this.collisionDetection(this.enemyBulletController);
         this.resetMoveDownTimer();
         this.fireBullet();
     }
 
-    collisionDetection() {
+    
+
+    collisionDetection(enemyBulletController) { // Add enemyBulletController as a parameter
         this.enemyRows.forEach((enemyRow) => {
-            enemyRow.forEach((Enemy,enemyIndex) => {
-                if(this.playerBulletController.collideWith(Enemy)){
+            for (let i = 0; i < enemyRow.length; i++) {
+                const enemy = enemyRow[i];
+                if (enemyBulletController.collideWith(enemy)) { // Use enemyBulletController instead of this.playerBulletController
                     this.enemyDeathSounds.currentTime = 0;
                     this.enemyDeathSounds.play();
-                    enemyRow.splice(enemyIndex, 1);
-                }
-            });
-        });
-        this.enemyRows = this.enemyRows.filter(enemyRow=> enemyRow.length > 0);
-    }
 
+                    // Detect collisions between player's bullets and enemies
+                    const destroyedEnemies = enemyBulletController.Bullets.filter(bullet =>
+                        enemyRow.some(enemy => enemy.collideWith(bullet)) // Use enemyRow to check collisions with each enemy in the row
+                    );
+
+                    // Destroy enemies
+                    destroyedEnemies.forEach(bullet => {
+                        const index = enemyRow.findIndex(enemy => enemy.collideWith(bullet));
+                        if (index !== -1) {
+                            enemyRow.splice(index, 1);
+                        }
+                    });
+                }
+            }
+        });
+
+        this.enemyRows = this.enemyRows.filter((enemyRow) => enemyRow.length > 0);
+    }
     fireBullet() {
         this.fireBulletTimer--;
         if (this.fireBulletTimer <= 0) {
@@ -160,7 +175,6 @@ export default class EnemyController {
 
 
     collideWith(sprite) {
-        return this.enemyRows.flat().some(enemy=> enemy.collideWith(sprite));
-
+        return this.enemyRows.flat().some(enemy => enemy.collideWith(sprite));
     }
 };
