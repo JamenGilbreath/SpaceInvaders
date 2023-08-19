@@ -55,36 +55,10 @@ export default class EnemyController {
     this.fireBullet();
   }
 
-  collisionDetection(enemyBulletController) {
-    // Add enemyBulletController as a parameter
-    this.enemyRows.forEach((enemyRow) => {
-      for (let i = 0; i < enemyRow.length; i++) {
-        const enemy = enemyRow[i];
-        if (enemyBulletController.collideWith(enemy)) {
-          // Use enemyBulletController instead of this.playerBulletController
-          this.enemyDeathSounds.currentTime = 0;
-          this.enemyDeathSounds.play();
-
-          // Detect collisions between player's bullets and enemies
-          const destroyedEnemies = enemyBulletController.Bullets.filter(
-            (bullet) => enemyRow.some((enemy) => enemy.collideWith(bullet)) // Use enemyRow to check collisions with each enemy in the row
-          );
-
-          // Destroy enemies
-          destroyedEnemies.forEach((bullet) => {
-            const index = enemyRow.findIndex((enemy) =>
-              enemy.collideWith(bullet)
-            );
-            if (index !== -1) {
-              enemyRow.splice(index, 1);
-            }
-          });
-        }
-      }
-    });
-
-    this.enemyRows = this.enemyRows.filter((enemyRow) => enemyRow.length > 0);
-  }
+  collisionDetection() {
+    // Adjust the collisionDetection method to pass the enemy array to the collideWith method
+    this.enemyBulletController.collideWith(this.enemyRows.flat());
+}
   fireBullet() {
     this.fireBulletTimer--;
     if (this.fireBulletTimer <= 0) {
