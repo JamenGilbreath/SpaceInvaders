@@ -175,6 +175,8 @@ export default class EnemyController {
   }
 
   collideWith(sprite) {
+    console.log("Bullet:", this.x, this.y, this.width, this.height);
+  console.log("Sprite:", sprite.x, sprite.y, sprite.width, sprite.height);
     return this.enemyRows.flat().some((enemy) => enemy.collideWith(sprite));
   }
 }
