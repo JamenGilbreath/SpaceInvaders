@@ -1,6 +1,6 @@
 
 
-export default class enemy {
+export default class Enemy {
 
     constructor(x,y,imageNumber) {
         this.x = x;
@@ -23,11 +23,11 @@ export default class enemy {
         this.y +=  y_Velocity;
     }
 
-    collideWith(sprite) {
-        if(this.x + this.width > sprite.x &&
-            this.x < sprite.x + sprite.width &&
-            this.y + this.height > sprite.y &&
-            this.y < sprite.y + sprite.height){
+    collideWith(enemy) {
+        if(this.x + this.width > enemy.x &&
+            this.x < enemy.x + enemy.width &&
+            this.y + this.height > enemy.y &&
+            this.y < enemy.y + enemy.height){
                return true; 
             } else{
             return false;
