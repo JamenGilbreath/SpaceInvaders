@@ -35,7 +35,7 @@ export default class BulletController {
 
 
     collideWith(enemy) {
-        const bulletThatHitSpriteIndex = this.Bullets.findIndex(bullet => {
+        const bulletThatHitSpriteIndex = this.Bullets.findIndex((bullet) => {
             const collision =
                 bullet.x + bullet.width > enemy.x &&
                 bullet.x < enemy.x + enemy.width &&

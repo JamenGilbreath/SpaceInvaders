@@ -55,10 +55,25 @@ export default class EnemyController {
     this.fireBullet();
   }
 
-  collisionDetection() {
-    // Adjust the collisionDetection method to pass the enemy array to the collideWith method
-    this.enemyBulletController.collideWith(this.enemyRows.flat());
-}
+  collisionDetection(enemyBulletController) {
+    console.log("Collision detection called"); // Check if this message appears in the console
+
+    this.enemyRows.forEach((enemyRow) => {
+      for (let i = 0; i < enemyRow.length; i++) {
+        const enemy = enemyRow[i];
+        if (enemyBulletController.collideWith(enemy)) {
+          // This block should be executed when a collision occurs
+          console.log("Collision detected with enemy:", enemy);
+          enemyRow.splice(i, 1); // Remove the enemy from the row
+          i--; // Adjust the index to account for the removed enemy
+        }
+      }
+    });
+
+    // Remove empty enemy rows
+    this.enemyRows = this.enemyRows.filter((enemyRow) => enemyRow.length > 0);
+  }
+
   fireBullet() {
     this.fireBulletTimer--;
     if (this.fireBulletTimer <= 0) {
